@@ -1,2 +1,2 @@
 # axis-vue-starter
-Typescript/Vue project starter kit
+Personal Typescript/Vue project starter kit
