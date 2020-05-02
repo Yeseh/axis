@@ -1,0 +1,16 @@
+{
+    "nodemonConfig": {
+        "ignore": [
+            "**/*.test.ts",
+            "**/*.spec.ts",
+            "**/*.spec.js",
+            ".git",
+            "node_modules",
+            "./src/client",
+            "**/*.vue"
+        ],
+        "watch": ["src"],
+        "exec": "npm start",
+        "ext": ["ts"]
+    }
+}
