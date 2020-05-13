@@ -1,11 +1,7 @@
-import {Request, Response} from "express";
-import {NextFunction} from "express-serve-static-core";
-import mysql from "mysql2";
-import {RateLimiterMySQL} from "rate-limiter-flexible";
-import NameSpace from "../Helpers/NamespaceHelper";
-import Status from "../Helpers/StatusManager";
-import {StatusCode} from "../models/BlybHTTP.model";
-
+import {Request, Response} from 'express';
+import {NextFunction} from 'express-serve-static-core';
+import mysql from 'mysql2';
+import {RateLimiterMySQL} from 'rate-limiter-flexible';
 
 const envlimituserip = process.env.LIMIT_BASIC_USE_USER_IP as unknown;
 
@@ -25,25 +21,23 @@ const pool = mysql.createPool({
 
 const basicLimiter = new RateLimiterMySQL({
     storeClient: pool,
-    keyPrefix: "limit_basic_tenant_ip_user",
+    keyPrefix: 'limit_basic_tenant_ip_user',
     dbName: process.env.DB_DATABASE,
     points: limitUserIp,
     duration: 60, // Per minute
     blockDuration: 60 * 5,
 });
 
-export default async function(
+export default async function (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void | Response> {
     try {
         const {ip} = req;
-        const user_uuid: string = await NameSpace.getUserUuid();
+        const user_uuid: string = await NameSpace.
 
-        const tenant: string = await NameSpace.getProperty("tenant");
-
-        const RLKey = `${tenant}_${ip}_${user_uuid}`;
+        const RLKey = `${ip}_${user_uuid}`;
 
         const basicRateLimit = await basicLimiter.get(RLKey);
 
@@ -51,8 +45,11 @@ export default async function(
             basicRateLimit !== null &&
             basicRateLimit.consumedPoints >= limitUserIp
         ) {
-            await NameSpace.setProperty("basic_blocked", 1);
-            return Status.handleControllerResult({res, status: StatusCode.TOO_MANY_REQUESTS});
+            await NameSpace.setProperty('basic_blocked', 1);
+            return Status.handleControllerResult({
+                res,
+                status: StatusCode.TOO_MANY_REQUESTS,
+            });
         }
         await basicLimiter.consume(RLKey);
 
