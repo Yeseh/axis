@@ -26,6 +26,10 @@ export interface RequestState {
     login_blocked_ip?: number;
 }
 
+/**
+ * Asynchronously creates a new namespace with the given name.
+ * If the provided name is already in use by an existing namespace, user the exsisting namespace
+ */
 export const createNamespace = async (
     nsName: string
 ): Promise<AxisRequestStateManager> => {
@@ -33,10 +37,8 @@ export const createNamespace = async (
 
     return namespace;
 };
-/**
- * ```
- */
-export class AxisRequestStateManager {
+
+class AxisRequestStateManager {
     private _namespace: Namespace;
 
     constructor(nsName: string) {
@@ -53,14 +55,16 @@ export class AxisRequestStateManager {
     /**
      * Asynchronously retrieves a property value from the given namespace.
      *
-     * Example:
+     * Usage:
      * ```ts
      * const username = await getProperty("username", "request")
      * ```
      */
-    public async getProperty(
-        property: string
-    ): Promise<string | number | boolean | null> {
+    public async get(property: string): Promise<string>;
+    public async get(property: string): Promise<number>;
+    public async get(property: string): Promise<boolean>;
+    public async get(property: string): Promise<Date>;
+    public async get<T>(property: string): Promise<T | null> {
         try {
             const result = this.namespace.get(property);
             return result;
@@ -72,13 +76,13 @@ export class AxisRequestStateManager {
     /**
      * Asynchronously retrieves a property value from the given namespace, and returns the newly set value.
      *
-     * Example:
+     * Usage:
      * ```ts
      * const username = await getProperty("username", "request")
      * ```
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public async setProperty(
+    public async set(
         property: string,
         data: string | number | boolean
     ): Promise<string | number | boolean | null> {
@@ -90,9 +94,8 @@ export class AxisRequestStateManager {
             return null;
         }
     }
-
     /**
-     * Asynchronously collects all request state information from the namespace
+     * Asynchronously collects all request state information from the namespace. Can be
      */
     public async composeRequestState(): Promise<RequestState> {
         const [
@@ -109,34 +112,34 @@ export class AxisRequestStateManager {
             ip_blocked,
             new_ip_blocked,
         ] = await Promise.all([
-            this.getProperty('user_uuid'),
-            this.getProperty('username'),
-            this.getProperty('ip_address'),
-            this.getProperty('request_method'),
-            this.getProperty('request_url'),
-            this.getProperty('response_status'),
-            this.getProperty('response_time'),
-            this.getProperty('response_info'),
-            this.getProperty('failed_login'),
-            this.getProperty('ip_blocked'),
-            this.getProperty('new_ip_blocked'),
-            this.getProperty('basic_blocked'),
+            this.get('user_uuid'),
+            this.get('username'),
+            this.get('ip_address'),
+            this.get('request_method'),
+            this.get('request_url'),
+            this.get('response_status'),
+            this.get('response_time'),
+            this.get('response_info'),
+            this.get('failed_login'),
+            this.get('ip_blocked'),
+            this.get('new_ip_blocked'),
+            this.get('basic_blocked'),
         ]);
 
         return {
             timestamp: new Date(),
-            user_uuid: user_uuid as string,
-            username: username as string,
-            ip_address: ip_address as string,
-            request_method: request_method as string,
+            user_uuid,
+            username,
+            ip_address,
+            request_method,
             request_url: request_url as string,
-            response_status: response_status as number,
-            response_time: response_time as number,
-            response_info: response_info as string,
-            ip_blocked: ip_blocked as number,
-            new_ip_blocked: new_ip_blocked as number,
-            failed_login: failed_login as number,
-            basic_blocked: basic_blocked as number,
+            response_status: (response_status as unknown) as number,
+            response_time: (response_time as unknown) as number,
+            response_info: (response_info as unknown) as string,
+            ip_blocked: (ip_blocked as unknown) as number,
+            new_ip_blocked: (new_ip_blocked as unknown) as number,
+            failed_login: (failed_login as unknown) as number,
+            basic_blocked: (basic_blocked as unknown) as number,
         };
     }
 }

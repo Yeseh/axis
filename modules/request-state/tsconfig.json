@@ -8,6 +8,7 @@
       "outDir": "./dist/src",
       "baseUrl": "./src/api",
       "experimentalDecorators": true,
+      "declaration": true,
       "allowJs": true,
       "typeRoots": ["./src/api/models"],
       "strict": true

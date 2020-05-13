@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "refreshVSToken": "vsts-npm-auth -config .npmrc"
+    "refreshVSToken": "vsts-npm-auth -config \"./.npmrc\""
   },
   "repository": {
     "type": "git",
