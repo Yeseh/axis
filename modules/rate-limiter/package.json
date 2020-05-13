@@ -1,0 +1,37 @@
+{
+  "name": "@axis/rate-limiter",
+  "version": "1.0.0",
+  "description": "Preconfigured express.js rate limiters using rate-limiter-flexible",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yeseh/axis.git"
+  },
+  "keywords": [
+    "ratelimiting",
+    "express",
+    "node"
+  ],
+  "author": "Yeseh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Yeseh/axis/issues"
+  },
+  "homepage": "https://github.com/Yeseh/axis#readme",
+  "peerDependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.1.0",
+    "rate-limiter-flexible": "^2.1.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.1.0",
+    "rate-limiter-flexible": "^2.1.4"
+  }
+}

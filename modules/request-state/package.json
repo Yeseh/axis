@@ -1,0 +1,27 @@
+{
+  "name": "@axis/request-state",
+  "version": "1.0.0",
+  "description": "Asynchronous wrapper for cls-hooked namespace operations",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yeseh/axis.git"
+  },
+  "keywords": [
+    "cls-hooked",
+    "continuation-local-storage",
+    "express"
+  ],
+  "author": "Yeseh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Yeseh/axis/issues"
+  },
+  "homepage": "https://github.com/Yeseh/axis#readme",
+  "dependencies": {
+    "cls-hooked": "^4.2.2"
+  }
+}
