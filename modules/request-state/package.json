@@ -1,11 +1,12 @@
 {
   "name": "@axis/request-state",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Asynchronous wrapper for cls-hooked namespace operations",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "refreshVSToken": "vsts-npm-auth -config \"./.npmrc\""
+    "refreshVSToken": "vsts-npm-auth -config \"./.npmrc\"",
+    "build": "tsc --outDir dist/ --declarationDir dist/types --declaration true && rollup -c"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "cls-hooked": "^4.2.2"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^3.1.1",
     "@types/cls-hooked": "^4.3.0",
     "@yeseh/prettier-config": "^1.0.0"
   },

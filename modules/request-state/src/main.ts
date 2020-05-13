@@ -30,13 +30,13 @@ export interface RequestState {
  * Asynchronously creates a new namespace with the given name.
  * If the provided name is already in use by an existing namespace, user the exsisting namespace
  */
-export const createNamespace = async (
+export async function createNamespace(
     nsName: string
-): Promise<AxisRequestStateManager> => {
+): Promise<AxisRequestStateManager> {
     const namespace = new AxisRequestStateManager(nsName);
 
     return namespace;
-};
+}
 
 class AxisRequestStateManager {
     private _namespace: Namespace;
