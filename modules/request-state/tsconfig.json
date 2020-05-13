@@ -1,17 +1,14 @@
 {
   "compilerOptions": {
-      "module": "commonjs",
+      "module": "es6",
       "esModuleInterop": true,
-      "target": "es6",
+      "target": "es2015",
       "moduleResolution": "node",
-      "sourceMap": true,
-      "baseUrl": "./src/api",
       "experimentalDecorators": true,
       "allowJs": true,
-      "typeRoots": ["./src/api/models"],
-      "strict": true
+      "strict": true,
   },
-  "lib": ["es2015"],
-  "include": ["src/**/*.ts"],
+  "lib": ["es2015", "dom"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.test.ts", "**/*.model.ts"]
 }

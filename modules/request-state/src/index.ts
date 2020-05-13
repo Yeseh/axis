@@ -25,6 +25,10 @@ export interface RequestState {
     basic_blocked?: number;
     login_blocked_ip?: number;
 }
+interface CreateNamespaceResult {
+    namespace: Namespace;
+    stateManager: AxisRequestStateManager;
+}
 
 /**
  * Asynchronously creates a new namespace with the given name.
@@ -32,13 +36,13 @@ export interface RequestState {
  */
 export async function createNamespace(
     nsName: string
-): Promise<AxisRequestStateManager> {
-    const namespace = new AxisRequestStateManager(nsName);
+): Promise<CreateNamespaceResult> {
+    const stateManager = new AxisRequestStateManager(nsName);
 
-    return namespace;
+    return {namespace: stateManager.namespace, stateManager};
 }
 
-class AxisRequestStateManager {
+export class AxisRequestStateManager {
     private _namespace: Namespace;
 
     constructor(nsName: string) {
@@ -81,11 +85,11 @@ class AxisRequestStateManager {
      * const username = await getProperty("username", "request")
      * ```
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public async set(
-        property: string,
-        data: string | number | boolean
-    ): Promise<string | number | boolean | null> {
+    public async set(property: string, data: string): Promise<string>;
+    public async set(property: string, data: number): Promise<number>;
+    public async set(property: string, data: boolean): Promise<boolean>;
+    public async set(property: string, data: Date): Promise<Date>;
+    public async set<T>(property: string, data: T): Promise<T | null> {
         try {
             this.namespace.set(property, data);
             return this.namespace.get(property);
@@ -95,7 +99,8 @@ class AxisRequestStateManager {
         }
     }
     /**
-     * Asynchronously collects all request state information from the namespace. Can be
+     * Asynchronously collects all request state information from the namespace.
+     * Override to use custom property names
      */
     public async composeRequestState(): Promise<RequestState> {
         const [

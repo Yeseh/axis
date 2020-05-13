@@ -1,12 +1,15 @@
 {
   "name": "@axis/request-state",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Asynchronous wrapper for cls-hooked namespace operations",
-  "main": "index.ts",
+  "main": "lib/index.js",
+  "module": "lib/index.es.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "refreshVSToken": "vsts-npm-auth -config \"./.npmrc\"",
-    "build": "tsc --outDir dist/ --declarationDir dist/types --declaration true && rollup -c"
+    "vs": "vsts-npm-auth -config \"./.npmrc\"",
+    "build": "tsc --outDir ./dist --declarationDir ./lib --declaration true --sourceMap true && rollup -c",
+    "prepublishOnly": "npm run build && rm -rf ./dist && npm version patch"
   },
   "repository": {
     "type": "git",
@@ -27,9 +30,12 @@
     "cls-hooked": "^4.2.2"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^3.1.1",
+    "@rollup/plugin-typescript": "^4.1.1",
     "@types/cls-hooked": "^4.3.0",
-    "@yeseh/prettier-config": "^1.0.0"
+    "@yeseh/prettier-config": "^1.0.0",
+    "rollup": "^2.10.0",
+    "tslib": "^1.12.0",
+    "typescript": "^3.9.2"
   },
   "prettier": "@yeseh/prettier-config"
 }

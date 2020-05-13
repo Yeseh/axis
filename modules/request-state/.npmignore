@@ -1,5 +1,5 @@
-node_modules/
-dist/
-tsconfig.json/
-.npmrc/
-package-lock.json/
+.*
+**/tsconfig.json
+node_modules
+src/
+*.config.js
