@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "modules/request-state"
+		},
+		{
+			"path": "modules/http"
 		}
 	],
 	"settings": {}

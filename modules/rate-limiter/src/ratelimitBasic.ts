@@ -1,7 +1,7 @@
-import {Request, Response} from 'express';
-import {NextFunction} from 'express-serve-static-core';
+import {Request, Response, NextFunction} from 'express';
 import mysql from 'mysql2';
 import {RateLimiterMySQL} from 'rate-limiter-flexible';
+import {createNamespace} from '@axis/request-state';
 
 const envlimituserip = process.env.LIMIT_BASIC_USE_USER_IP as unknown;
 
