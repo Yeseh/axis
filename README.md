@@ -1,6 +1,6 @@
-# axis-vue-starter
+# axis
 
-Personal Typescript/Vue project starter kit
+Personal Typescript/Vue/Express toolkit.
 
 
 # Copyright notices
